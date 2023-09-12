@@ -13,7 +13,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool _isTestEnv = false;
+  final bool _isTestEnv = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
