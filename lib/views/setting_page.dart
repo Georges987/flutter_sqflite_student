@@ -1,4 +1,6 @@
 import 'package:applcation_test/provider/student_provider.dart';
+import 'package:applcation_test/views/add.dart';
+import 'package:applcation_test/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,7 +16,15 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Paramètres")),
+      appBar: AppBar(
+          title: const Text("Paramètres"),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const Home()),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.arrow_back))),
       body: ListView(
         children: [
           ListTile(
@@ -49,6 +59,15 @@ class _SettingPageState extends State<SettingPage> {
             },
           ),
           ListTile(
+            title: const Text("Données de test"),
+            leading: const Icon(Icons.add),
+            subtitle: const Text(
+                "Insérer des données de test dans la base de donnée"),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const AddStu())),
+          ),
+          ListTile(
             title: const Text("Quitter"),
             subtitle: const Text("Quitter l'application"),
             leading: const Icon(Icons.exit_to_app),
@@ -68,6 +87,7 @@ class _SettingPageState extends State<SettingPage> {
                               child: const Text("Annuler")),
                           TextButton(
                               onPressed: () {
+                                StuProvider().close();
                                 SystemNavigator.pop();
                               },
                               child: const Text("Quitter"))
