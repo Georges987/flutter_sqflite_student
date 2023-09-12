@@ -13,6 +13,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  bool _isTestEnv = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +59,8 @@ class _SettingPageState extends State<SettingPage> {
                       ));
             },
           ),
-          ListTile(
+          _isTestEnv
+              ? ListTile(
             title: const Text("Données de test"),
             leading: const Icon(Icons.add),
             subtitle: const Text(
@@ -66,7 +68,8 @@ class _SettingPageState extends State<SettingPage> {
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => const AddStu())),
-          ),
+                )
+              : const SizedBox(),
           ListTile(
             title: const Text("Quitter"),
             subtitle: const Text("Quitter l'application"),
