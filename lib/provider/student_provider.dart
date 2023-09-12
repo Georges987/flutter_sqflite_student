@@ -73,4 +73,29 @@ class StuProvider {
     final Database db = await get();
     await db.delete('students');
   }
+
+  Future<void> close() async {
+    final Database db = await get();
+    await db.close();
+  }
+
+  Future<void> insertFalseData() async {
+    final Database db = await get();
+    for (var i = 0; i < 60; i++) {
+      await db.insert(
+      'students',
+      Student(
+        i,
+        "18A00000",
+        "Nom $i",
+        "Prenom $i",
+        "Masculin",
+        DateTime.now(),
+        "0000000$i",
+      ).toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    }
+    
+  }
 }
