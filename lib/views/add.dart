@@ -23,10 +23,10 @@ class _AddStuState extends State<AddStu> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Ajouter un nouvel étudiant"),
+          title: const Text("Nouveau"),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: ListView(
             children: [
               Input(
@@ -95,6 +95,7 @@ class _AddStuState extends State<AddStu> {
                     final DateTime? picked = await showDatePicker(
                         context: context,
                         initialDate: birth,
+                        currentDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now());
                     if (picked != null && picked != birth) {

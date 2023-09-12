@@ -142,23 +142,28 @@ class _EditState extends State<Edit> {
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: () {
-                        Student stu = Student(
-                          widget.stu.id,
-                          matriculeController.text,
-                          nomController.text,
-                          prenomController.text,
-                          sexeController.text,
-                          birth,
-                          telController.text,
-                        );
-                        StuProvider().get();
-                        StuProvider().update(stu);
-                        Fluttertoast.showToast(
-                            msg: "Etudiant modifié avec succès");
-                        Navigator.of(context).pushAndRemoveUntil(
+                        if (matriculeController.text.isNotEmpty &&
+                            nomController.text.isNotEmpty &&
+                            prenomController.text.isNotEmpty &&
+                            sexeController.text.isNotEmpty &&
+                            telController.text.isNotEmpty) {
+                          Student stu = Student(
+                              widget.stu.id,
+                              matriculeController.text,
+                              nomController.text,
+                              prenomController.text,
+                              sexeController.text,
+                              birth,
+                              telController.text);
+                          StuProvider().update(stu);
+                          Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => const Home()),
-                              (route) => false);
+                                  builder: (context) => const Home()));
+                          Fluttertoast.showToast(msg: "Etudiant modifié");
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Veuillez remplir tous les champs");
+                        }
                       },
                       child: const Text("Modifier")),
                 )
