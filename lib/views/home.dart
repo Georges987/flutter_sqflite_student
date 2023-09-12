@@ -4,6 +4,7 @@ import 'package:applcation_test/components/list_stu.dart';
 import 'package:applcation_test/models/etudiant.dart';
 import 'package:applcation_test/provider/student_provider.dart';
 import 'package:applcation_test/views/add.dart';
+import 'package:applcation_test/views/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -45,14 +46,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Students Store"),
+        title: const Text("Liste des étudiants"),
+        leading: const Icon(Icons.home),
         actions: [
           IconButton(onPressed: (){
-            
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SettingPage()));
           }, icon: const Icon(Icons.settings))
         ],
       ),
-      body: Padding(
+      
+      body: Container(
+        margin: const EdgeInsets.only(bottom: 20),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListStu(stu: _stu),
           ),
