@@ -47,24 +47,25 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Liste des étudiants"),
-        leading: const Icon(Icons.home),
         actions: [
-          IconButton(onPressed: (){
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AddStu()));
+              },
+              icon: const Icon(Icons.add)),
+          IconButton(
+              onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SettingPage()));
-          }, icon: const Icon(Icons.settings))
+              },
+              icon: const Icon(Icons.settings)),
         ],
       ),
-      
       body: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListStu(stu: _stu),
-          ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddStu())),
-          child: const Icon(Icons.add)),
+        margin: const EdgeInsets.only(top: 20, bottom: 20),
+        child: ListStu(stu: _stu),
+      ),
     );
   }
 }
