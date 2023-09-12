@@ -1,20 +1,27 @@
+import 'dart:io';
+
 import 'package:applcation_test/models/etudiant.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class StuProvider {
   Database? base;
 
   Future<Database> get() async {
+    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+      databaseFactory = databaseFactoryFfi;
+    }
+
     base ??= await openDatabase(
-        join(await getDatabasesPath(), 'students.db'),
-        onCreate: (db, version) {
-          return db.execute(
-            'CREATE TABLE students(id INTEGER PRIMARY KEY, matricule TEXT, nom TEXT, prenom TEXT, sexe TEXT, birth INTEGER, telephone TEXT)',
-          );
-        },
-        version: 1,
-      );
+      join(await getDatabasesPath(), 'students.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE students(id INTEGER PRIMARY KEY, matricule TEXT, nom TEXT, prenom TEXT, sexe TEXT, birth INTEGER, telephone TEXT)',
+        );
+      },
+      version: 1,
+    );
     return base!;
   }
 
@@ -60,5 +67,10 @@ class StuProvider {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<void> deleteAll() async {
+    final Database db = await get();
+    await db.delete('students');
   }
 }
